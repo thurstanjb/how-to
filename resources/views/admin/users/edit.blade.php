@@ -43,7 +43,7 @@
                         <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                             <label for="password" class="control-label col-md-3">Password</label>
                             <div class="col-md-8">
-                                <input type="password" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control" placeholder="For reset only!">
                                 @if($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{$errors->first('password')}}</strong>
@@ -57,7 +57,7 @@
                             <label for="password_confirmation" class="control-label col-md-3">Confirm Password</label>
                             <div class="col-md-8">
                                 <input type="password" name="password_confirmation"
-                                       id="password_confirmation" class="form-control">
+                                       id="password_confirmation" class="form-control" placeholder="For reset only!">
                                 @if($errors->has('password_confirmation'))
                                     <span class="help-block">
                                         <strong>{{$errors->first('password_confirmation')}}</strong>

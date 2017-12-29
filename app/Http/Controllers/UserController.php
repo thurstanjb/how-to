@@ -91,7 +91,8 @@ class UserController extends Controller
         ]);
         $user->name = $valid['name'];
         $user->email = $valid['email'];
-        if($valid['password'] !== ''){
+
+        if($valid['password'] !== null){
             $user->password = bcrypt($valid['password']);
         }
         $user->save();
