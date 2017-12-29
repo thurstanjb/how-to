@@ -27,4 +27,11 @@ class UserTest extends TestCase
 
         $this->assertCount(2, $user->books);
     }
+
+    /** @test */
+    public function _a_user_can_return_their_profile_path(){
+        $user = create(User::class);
+
+        $this->assertEquals('/admin/users/'.$user->id, $user->path());
+    }
 }

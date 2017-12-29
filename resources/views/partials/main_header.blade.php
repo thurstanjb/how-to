@@ -19,7 +19,10 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                &nbsp;
+                &nbsp;@if(auth()->check())
+                    <li><a href="{{route('admin.home')}}">Dashboard</a></li>
+                    <li><a href="{{route('admin.users.index')}}">Users</a></li>
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->
