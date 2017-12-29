@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Book;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -17,5 +16,15 @@ class UserTest extends TestCase
         $user = create(User::class);
 
         $this->assertNotEmpty($user);
+    }
+
+    /** @test */
+    public function _it_can_return_its_books(){
+        $user = create(User::class);
+
+        $book1 = create(Book::class, ['user_id' => $user->id]);
+        $book2 = create(Book::class, ['user_id' => $user->id]);
+
+        $this->assertCount(2, $user->books);
     }
 }
