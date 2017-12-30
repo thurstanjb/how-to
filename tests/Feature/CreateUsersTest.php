@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateUsersTest extends TestCase
 {
@@ -113,7 +111,12 @@ class CreateUsersTest extends TestCase
 
         $this->signIn();
 
+        $user_data = $user->toArray();
+        $user_data['password'] = '';
+        $user_data['password_confirmation'] = '';
 
+        $this->patch($user->path().'/edit', $user_data)
+            ->assertRedirect(route('admin.users.index'));
     }
 
     public function publishUser($overrides = []){

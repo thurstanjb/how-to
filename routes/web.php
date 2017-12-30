@@ -25,11 +25,11 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function(){
 
     Route::prefix('/users')->name('users.')->group(function(){
         Route::get('/', 'UserController@index')->name('index');
+        Route::put('/', 'UserController@store')->name('store');
         Route::get('/create', 'UserController@create')->name('create');
         Route::get('/{user}', 'UserController@show')->name('show');
         Route::delete('/{user}', 'UserController@destroy')->name('destroy');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
         Route::patch('/{user}/edit', 'UserController@update')->name('update');
-        Route::put('/', 'UserController@store')->name('store');
     });
 });
