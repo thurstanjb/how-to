@@ -13,6 +13,7 @@
                 <form action="{{route('admin.users.store')}}" method="post" class="form form-horizontal">
                     {{method_field('PUT')}}
                     {{csrf_field()}}
+
                     <div class="row">
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label for="name" class="control-label col-md-3">Name</label>
@@ -26,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             <label for="email" class="control-label col-md-3">Email</label>
@@ -39,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                             <label for="password" class="control-label col-md-3">Password</label>
@@ -52,6 +55,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                             <label for="password_confirmation" class="control-label col-md-3">Confirm Password</label>
@@ -67,6 +71,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-6">
@@ -74,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

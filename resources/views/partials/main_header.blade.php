@@ -23,6 +23,8 @@
                     <li><a href="{{route('admin.home')}}">Dashboard</a></li>
                     <li><a href="{{route('admin.users.index')}}">Users</a></li>
                 @endif
+
+                <li><a href="{{route('books.index')}}">Books</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->

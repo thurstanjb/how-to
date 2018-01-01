@@ -17,6 +17,7 @@ class CreateBooksTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('title', 100);
+            $table->string('slug', 150);
             $table->text('description')->nullable();
             $table->timestamps();
 
