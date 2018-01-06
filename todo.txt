@@ -1,6 +1,12 @@
 06/01
 
-Create admin user
+Add book policy
+    Create book policy - DONE
+    Create tests to only allow the books owner to update the book - DONE
+    Create owns method on user to check if a model is owned by the user - DONE
+    Update views to hide update functions if not book owner - DONE
+
+Create admin user - DONE
     Create migration to add user_type to users - DONE
     Add middleware to check for admin user - DONE
     Create auth and admin routes - DONE

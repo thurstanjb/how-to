@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -42,5 +43,12 @@ class User extends Authenticatable
 
     public function isAdmin(){
         return $this->user_type == 'admin';
+    }
+
+    public function owns(Model $model){
+            if(method_exists($model, 'owner')){
+                return $model->owner->id == $this->id;
+            }
+            return false;
     }
 }

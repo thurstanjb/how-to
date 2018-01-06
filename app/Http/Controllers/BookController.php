@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class BookController extends Controller
 {
@@ -69,7 +70,14 @@ class BookController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Book $book){
+        try{
+            $this->authorize('update', $book);
+        } catch(\Exception $e){
+            return redirect('/');
+        }
+
         return view('admin.books.edit', compact('book'));
+
     }
 
     /**
@@ -80,6 +88,12 @@ class BookController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Book $book, Request $request){
+        try{
+            $this->authorize('update', $book);
+        }catch(\Exception $e){
+            return redirect('/');
+        }
+
         $valid = $this->validate($request, [
             'title' => 'required',
             'description' => 'present'
@@ -98,6 +112,12 @@ class BookController extends Controller
      * @throws \Exception
      */
     public function destroy(Book $book){
+        try{
+            $this->authorize('delete', $book);
+        }catch(\Exception $e){
+            return redirect('/');
+        }
+
         $book->delete();
 
         if(request()->wantsJson()){

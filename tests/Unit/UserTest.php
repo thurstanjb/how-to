@@ -42,4 +42,17 @@ class UserTest extends TestCase
 
         $this->assertFalse($user->isAdmin());
     }
+
+    /** @test */
+    public function _a_user_can_check_if_it_owns_a_model(){
+        $user = create(User::class);
+        $user2 = create(User::class);
+
+        $book1 = create(Book::class);
+        $book2 = create(Book::class, ['user_id' => $user->id]);
+
+        $this->assertFalse($user->owns($book1));
+        $this->assertFalse($user->owns($user2));
+        $this->assertTrue($user->owns($book2));
+    }
 }

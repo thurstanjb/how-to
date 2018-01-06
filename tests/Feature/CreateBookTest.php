@@ -38,8 +38,9 @@ class CreateBookTest extends TestCase
     }
 
     /** @test */
-    public function _only_an_authorised_user_can_update_a_book(){
-        $book = create(Book::class);
+    public function _only_the_owner_can_update_a_book(){
+        $user = create(User::class);
+        $book = create(Book::class, ['user_id' => $user->id]);
         $title = 'My new title';
         $book->title = $title;
 
@@ -47,7 +48,16 @@ class CreateBookTest extends TestCase
             ->assertRedirect('/login');
 
         $this->signIn();
+        $this->patch(route('admin.books.edit', ['book' => $book]), $book->toArray())
+            ->assertRedirect('/');
+        $this->signOut();
 
+        $this->signInAdmin();
+        $this->patch(route('admin.books.edit', ['book' => $book]), $book->toArray())
+            ->assertRedirect('/');
+        $this->signOut();
+
+        $this->signIn($user);
         $response = $this->patch(route('admin.books.edit', ['book' => $book]), $book->toArray());
         $this->get($response->headers->get('location'))
             ->assertSee($book->author)
@@ -55,13 +65,25 @@ class CreateBookTest extends TestCase
     }
 
     /** @test */
-    public function _only_an_authorised_user_can_delete_a_book(){
-        $book = create(Book::class);
+    public function _only_the_owner_can_delete_a_book(){
+
+        $user = create(User::class);
+        $book = create(Book::class, ['user_id' => $user->id]);
 
         $this->delete(route('admin.books.destroy', ['book' => $book]))
             ->assertRedirect('/login');
 
         $this->signIn();
+        $this->delete(route('admin.books.destroy', ['book' => $book]))
+            ->assertRedirect('/');
+        $this->signOut();
+
+        $this->signInAdmin();
+        $this->delete(route('admin.books.destroy', ['book' => $book]))
+            ->assertRedirect('/');
+        $this->signOut();
+
+        $this->signIn($user);
         $this->json('DELETE', route('admin.books.destroy', ['book' => $book]))
             ->assertStatus(204);
     }

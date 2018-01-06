@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Book;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -39,17 +40,29 @@ class BookNavigationTest extends TestCase
     }
 
     /** @test */
-    public function _only_an_authorised_user_can_visit_the_update_form(){
+    public function _only_a_books_author_can_visit_the_update_form(){
 
         $this->withExceptionHandling();
-        $book = create(Book::class);
+        $user = create(User::class);
+        $book = create(Book::class, ['user_id' => $user->id]);
 
         $this->get(route('admin.books.edit', ['book' => $book]))
             ->assertRedirect('/login');
 
         $this->signIn();
+        $this->get(route('admin.books.edit', ['book' => $book]))
+            ->assertRedirect('/');
+        $this->signOut();
 
+        $this->signInAdmin();
+        $this->get(route('admin.books.edit', ['book' => $book]))
+            ->assertRedirect('/');
+        $this->signOut();
+
+        $this->signIn($user);
         $this->get(route('admin.books.edit', ['book' => $book]))
             ->assertStatus(200);
+        $this->signOut();
+
     }
 }
