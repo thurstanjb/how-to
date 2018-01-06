@@ -74,6 +74,18 @@
 
                     <div class="row">
                         <div class="form-group">
+                            <label for="user_type" class="control-label col-md-3">User Type</label>
+                            <div class="col-md-8">
+                                <select name="user_type" id="user_type" class="form-control">
+                                    <option value="auth">Author</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
                             <div class="col-md-6 col-md-offset-6">
                                 <button type="submit" class="btn btn-primary">Create User</button>
                             </div>

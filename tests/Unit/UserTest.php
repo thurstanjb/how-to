@@ -16,6 +16,7 @@ class UserTest extends TestCase
         $user = create(User::class);
 
         $this->assertNotEmpty($user);
+        $this->assertEquals('auth', $user->user_type);
     }
 
     /** @test */
@@ -33,5 +34,12 @@ class UserTest extends TestCase
         $user = create(User::class);
 
         $this->assertEquals('/admin/users/'.$user->id, $user->path());
+    }
+
+    /** @test */
+    public function _a_user_can_check_if_they_are_an_admin(){
+        $user = create(User::class);
+
+        $this->assertFalse($user->isAdmin());
     }
 }

@@ -43,12 +43,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'user_type' => 'required|string|min:4'
         ]);
 
         $user = User::create([
             'name' => $valid['name'],
             'email' => $valid['email'],
-            'password' => bcrypt($valid['password'])
+            'password' => bcrypt($valid['password']),
+            'user_type' => $valid['user_type']
         ]);
 
         return redirect($user->path())
@@ -90,6 +92,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'password' => 'confirmed',
+            'user_type' => 'required|string|min:4'
         ]);
         $user->name = $valid['name'];
         $user->email = $valid['email'];
@@ -97,6 +100,10 @@ class UserController extends Controller
         if($valid['password'] !== null){
             $user->password = bcrypt($valid['password']);
         }
+        if(auth()->user()->id !== $user->id){
+            $user->user_type = $valid['user_type'];
+        }
+
         $user->save();
 
         return redirect()->route('admin.users.index')

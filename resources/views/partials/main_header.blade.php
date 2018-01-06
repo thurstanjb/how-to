@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                &nbsp;@if(auth()->check())
+                &nbsp;@if(auth()->check() && auth()->user()->isAdmin())
                     <li><a href="{{route('admin.home')}}">Dashboard</a></li>
                     <li><a href="{{route('admin.users.index')}}">Users</a></li>
                 @endif
@@ -31,6 +31,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @guest
+                    <li><a href="{{ route('register') }}">Register</a></li>
                     <li><a href="{{ route('login') }}">Login</a></li>
                 @else
                     <li class="dropdown">

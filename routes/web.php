@@ -28,7 +28,7 @@ Route::prefix('/books')->name('books.')->group(function(){
 Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function(){
     Route::get('/home', 'AdminController@index')->name('home');
 
-    Route::prefix('/users')->name('users.')->group(function(){
+    Route::prefix('/users')->name('users.')->middleware('admin')->group(function(){
         Route::get('/', 'UserController@index')->name('index');
         Route::put('/', 'UserController@store')->name('store');
         Route::get('/create', 'UserController@create')->name('create');

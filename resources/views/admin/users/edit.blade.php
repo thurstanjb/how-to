@@ -39,6 +39,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                             <label for="password" class="control-label col-md-3">Password</label>
@@ -52,6 +53,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                             <label for="password_confirmation" class="control-label col-md-3">Confirm Password</label>
@@ -66,6 +68,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="user_type" class="control-label col-md-3">User Type</label>
+                            <div class="col-md-8">
+                                <select name="user_type" id="user_type" class="form-control">
+                                    <option value="auth" @if($user->user_type == 'auth')selected @endif>Author</option>
+                                    <option value="admin" @if($user->user_type == 'admin')selected @endif>Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-6">

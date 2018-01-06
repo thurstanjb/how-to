@@ -14,34 +14,25 @@ class CreateUsersTest extends TestCase
     public function _a_guest_may_not_create_a_user(){
         $this->withExceptionHandling();
 
-        $this->put('/admin/users')
-            ->assertRedirect('/login');
         $this->get('admin/users/create')
             ->assertRedirect('/login');
     }
 
     /** @test */
-    public function _only_an_authenticated_user_can_visit_the_create_form(){
-        $this->withExceptionHandling();
+    public function _only_an_admin_user_may_create_a_new_user(){
 
-        $this->get('admin/users/create')
-            ->assertRedirect('/login');
-
-        $this->signIn();
-
-        $this->get('admin/users/create')
-            ->assertStatus(200);
-    }
-
-    /** @test */
-    public function _only_an_authenticated_user_may_create_a_new_user(){
-        $this->signIn();
         $test_user = make(User::class);
         $test_user = $test_user->toArray();
         $test_user['password'] = 'secret';
         $test_user['password_confirmation'] = 'secret';
-        $response = $this->put('/admin/users', $test_user);
 
+        $this->signIn();
+        $response = $this->put('/admin/users', $test_user)
+            ->assertRedirect('/');
+        $this->signOut();
+
+        $this->signInAdmin();
+        $response = $this->put('/admin/users', $test_user);
         $this->get($response->headers->get('location'))
             ->assertSee($test_user['name'])
             ->assertSee($test_user['email']);
@@ -65,22 +56,10 @@ class CreateUsersTest extends TestCase
             ->assertSessionHasErrors('password');
     }
 
-    /** @test */
-    public function _only_an_authenticated_user_can_visit_the_update_form(){
-        $this->withExceptionHandling();
-
-        $this->get('admin/users/1/edit')
-            ->assertRedirect('/login');
-
-        $this->signIn();
-
-        $this->get('admin/users/1/edit')
-            ->assertStatus(200);
-    }
 
     /** @test */
-    public function _an_authorised_user_cannot_delete_their_own_account(){
-        $user = create(User::class);
+    public function _an_admin_user_cannot_delete_their_own_account(){
+        $user = create(User::class, ['user_type' => 'admin']);
         $this->signIn($user);
 
         $this->delete(route('admin.users.destroy', ['user' => $user]))
@@ -88,21 +67,24 @@ class CreateUsersTest extends TestCase
     }
 
     /** @test */
-    public function _guest_users_cannot_delete_a_user(){
+    public function _only_an_admin_user_can_delete_a_user(){
         $this->withExceptionHandling();
-        $user = create(User::class);
 
+        $user = create(User::class);
         $this->delete($user->path())
             ->assertRedirect('/login');
 
         $this->signIn();
+        $this->delete($user->path())
+            ->assertRedirect('/');
 
+        $this->signInAdmin();
         $this->json('DELETE', $user->path())
             ->assertStatus(204);
     }
 
     /** @test */
-    public function _only_authorised_users_can_update_a_user(){
+    public function _only_admin_users_can_update_a_user(){
         $this->withExceptionHandling();
         $user = create(User::class);
 
@@ -110,7 +92,11 @@ class CreateUsersTest extends TestCase
             ->assertRedirect('/login');
 
         $this->signIn();
+        $this->patch($user->path().'/edit', $user->toArray())
+            ->assertRedirect('/');
+        $this->signOut();
 
+        $this->signInAdmin();
         $user_data = $user->toArray();
         $user_data['password'] = '';
         $user_data['password_confirmation'] = '';
@@ -119,8 +105,24 @@ class CreateUsersTest extends TestCase
             ->assertRedirect(route('admin.users.index'));
     }
 
+    /** @test */
+    public function _a_user_cannot_update_their_own_user_type(){
+        $user = create(User::class, ['user_type' => 'admin']);
+
+        $this->signIn($user);
+
+        $user->user_type = 'auth';
+        $user_data = $user->toArray();
+
+        $this->patch($user->path().'/edit', $user_data);
+
+        $updated_user = User::find($user->id);
+
+        $this->assertEquals('admin', $updated_user->user_type);
+    }
+
     public function publishUser($overrides = []){
-        $this->withExceptionHandling()->signIn();
+        $this->withExceptionHandling()->signInAdmin();
         $user = make(User::class, $overrides);
         $user->password = $user->password ?: 'secret';
         $user->password_confirmation = $user->password ?: 'secret';

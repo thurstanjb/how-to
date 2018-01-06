@@ -1,0 +1,10 @@
+06/01
+
+Create admin user
+    Create migration to add user_type to users - DONE
+    Add middleware to check for admin user - DONE
+    Create auth and admin routes - DONE
+    Update create_user form to allow admin to set user level - DONE
+    Update update_user form to allow admin to set user level - DONE
+    Reset registration to allow users to register - DONE
+    Ensure that registered users have a default user_level of auth - DONE
