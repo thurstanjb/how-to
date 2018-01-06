@@ -1,6 +1,8 @@
 
 window._ = require('lodash');
 
+window.Vue = require('vue');
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -51,3 +53,18 @@ if (token) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+/**
+ * Create an event bus to manage global js eventing
+ */
+window.events = new Vue();
+
+/**
+ * Allow flash messaging to be passed via js
+ *
+ * @param message
+ * @param level
+ */
+window.flash = function(message, level = 'success'){
+        window.events.$emit('flash', {message, level})
+};

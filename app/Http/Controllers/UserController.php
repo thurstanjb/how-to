@@ -119,7 +119,8 @@ class UserController extends Controller
                 return response([], 204);
             }
 
-            return redirect('/admin/users');
+            return redirect('/admin/users')
+                ->with('flash', $user->name.' has been deleted');
         }
 
         return redirect($user->path())

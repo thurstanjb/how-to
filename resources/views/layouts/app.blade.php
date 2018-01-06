@@ -17,6 +17,7 @@
     <div id="app">
         @include('partials.main_header')
         @yield('content')
+        <flash message="{{session('flash')}}"></flash>
     </div>
 
     <!-- Scripts -->
