@@ -7,9 +7,9 @@
                 Book Details
                 <span class="pull-right">
                     <a href="{{route('books.index')}}" class="btn-sm btn-success">Index</a>
-                    @if(auth()->check() && auth()->user()->owns($book))
+                    @can('update', $book)
                         <a href="{{route('admin.books.edit', ['book' => $book])}}" class="btn-sm btn-primary">Edit</a>
-                    @endif
+                    @endcan
                 </span>
             </div>
             <div class="panel-body">

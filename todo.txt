@@ -1,6 +1,12 @@
-06/01
+07/01
+Fix Exception from book policy - DONE
 
-Add book policy
+Add Book filters
+    Add filter class
+    Add filter to show the current users books
+
+06/01
+Add book policy - DONE
     Create book policy - DONE
     Create tests to only allow the books owner to update the book - DONE
     Create owns method on user to check if a model is owned by the user - DONE

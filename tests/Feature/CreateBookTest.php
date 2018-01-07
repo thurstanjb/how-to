@@ -49,12 +49,12 @@ class CreateBookTest extends TestCase
 
         $this->signIn();
         $this->patch(route('admin.books.edit', ['book' => $book]), $book->toArray())
-            ->assertRedirect('/');
+            ->assertStatus(403);
         $this->signOut();
 
         $this->signInAdmin();
         $this->patch(route('admin.books.edit', ['book' => $book]), $book->toArray())
-            ->assertRedirect('/');
+            ->assertStatus(403);
         $this->signOut();
 
         $this->signIn($user);
@@ -75,12 +75,12 @@ class CreateBookTest extends TestCase
 
         $this->signIn();
         $this->delete(route('admin.books.destroy', ['book' => $book]))
-            ->assertRedirect('/');
+            ->assertStatus(403);
         $this->signOut();
 
         $this->signInAdmin();
         $this->delete(route('admin.books.destroy', ['book' => $book]))
-            ->assertRedirect('/');
+            ->assertStatus(403);
         $this->signOut();
 
         $this->signIn($user);

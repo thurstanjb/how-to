@@ -48,7 +48,8 @@
 
                 </form>
 
-                <form action="{{route('admin.books.destroy', ['book' => $book])}}" method="post" class="form">
+                @can('delete', $book)
+                    <form action="{{route('admin.books.destroy', ['book' => $book])}}" method="post" class="form">
                     {{method_field('DELETE')}}
                     {{csrf_field()}}
                     <div class="row">
@@ -59,6 +60,7 @@
                         </div>
                     </div>
                 </form>
+                @endcan
             </div>
         </div>
     </div>

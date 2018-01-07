@@ -51,12 +51,12 @@ class BookNavigationTest extends TestCase
 
         $this->signIn();
         $this->get(route('admin.books.edit', ['book' => $book]))
-            ->assertRedirect('/');
+            ->assertStatus(403);
         $this->signOut();
 
         $this->signInAdmin();
         $this->get(route('admin.books.edit', ['book' => $book]))
-            ->assertRedirect('/');
+            ->assertStatus(403);
         $this->signOut();
 
         $this->signIn($user);

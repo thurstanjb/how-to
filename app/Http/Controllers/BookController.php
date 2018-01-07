@@ -67,13 +67,10 @@ class BookController extends Controller
      *
      * @param Book $book
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Book $book){
-        try{
-            $this->authorize('update', $book);
-        } catch(\Exception $e){
-            return redirect('/');
-        }
+        $this->authorize('update', $book);
 
         return view('admin.books.edit', compact('book'));
 
@@ -85,13 +82,10 @@ class BookController extends Controller
      * @param Book $book
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Book $book, Request $request){
-        try{
-            $this->authorize('update', $book);
-        }catch(\Exception $e){
-            return redirect('/');
-        }
+        $this->authorize('update', $book);
 
         $valid = $this->validate($request, [
             'title' => 'required',
@@ -111,11 +105,7 @@ class BookController extends Controller
      * @throws \Exception
      */
     public function destroy(Book $book){
-        try{
-            $this->authorize('delete', $book);
-        }catch(\Exception $e){
-            return redirect('/');
-        }
+        $this->authorize('delete', $book);
 
         $book->delete();
 
