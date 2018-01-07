@@ -6,6 +6,7 @@ Create Article CRUD
     Create ArticleNavigationTest to test user access - DONE
     Create CreateArticleTest to test store/update/delete
     Build views for show/edit/create
+    Add navigation
 
 
 Refactor Routes - DONE

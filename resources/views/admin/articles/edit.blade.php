@@ -7,7 +7,7 @@
             <div class="panel-body">
                 <form action="{{route('admin.articles.update', ['article' => $article])}}"
                       method="post" class="form form-horizontal">
-                    {{method_field('put')}}
+                    {{method_field('patch')}}
                     {{csrf_field()}}
                 </form>
             </div>
