@@ -1,7 +1,16 @@
 07/01
+Create Article CRUD
+    Create routes and name - DONE
+    Create controller methods
+    Create ArticlePolicy - DONE
+    Create ArticleNavigationTest to test user access - DONE
+    Create CreateArticleTest to test store/update/delete
+    Build views for show/edit/create
+
+
 Refactor Routes - DONE
     Remove '/books/' from routes set this to wildcard - DONE
-    Updte book tests to path /{book->id} - DONE
+    Update book tests to path /{book->id} - DONE
     Update article tests to path /{book->id}/{article->id} - DONE
 
 Update Book - DONE

@@ -14,21 +14,24 @@ class BookNavigationTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function _a_guest_can_view_the_books_listing_page(){
+    public function _a_guest_can_view_the_books_listing_page()
+    {
         $book = create(Book::class, ['title' => 'book']);
         $this->get(route('books.index'))
             ->assertSee($book->title);
     }
 
     /** @test */
-    public function _it_a_guest_user_can_visit_the_book(){
+    public function _a_guest_user_can_visit_the_book()
+    {
         $book = create(Book::class);
         $this->get($book->path())
             ->assertSee($book->title);
     }
 
     /** @test */
-    public function _only_an_authorised_user_can_visit_the_create_form(){
+    public function _only_an_authorised_user_can_visit_the_create_form()
+    {
 
         $this->get(route('admin.books.create'))
             ->assertRedirect('/login');
@@ -40,8 +43,8 @@ class BookNavigationTest extends TestCase
     }
 
     /** @test */
-    public function _only_a_books_author_can_visit_the_update_form(){
-
+    public function _only_a_books_author_can_visit_the_update_form()
+    {
         $this->withExceptionHandling();
         $user = create(User::class);
         $book = create(Book::class, ['user_id' => $user->id]);
@@ -63,6 +66,5 @@ class BookNavigationTest extends TestCase
         $this->get(route('admin.books.edit', ['book' => $book]))
             ->assertStatus(200);
         $this->signOut();
-
     }
 }

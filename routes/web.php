@@ -20,11 +20,6 @@ Auth::routes();
 
 Route::get('/', 'MainController@index')->name('index');
 
-Route::name('books.')->group(function(){
-   Route::get('/books', 'BookController@index')->name('index');
-   Route::get('/{book}', 'BookController@show')->name('show');
-});
-
 Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function(){
     Route::get('/home', 'AdminController@index')->name('home');
 
@@ -45,4 +40,22 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function(){
        Route::patch('/{book}/edit', 'BookController@update')->name('update');
        Route::delete('/{book}', 'BookController@destroy')->name('destroy');
     });
+
+    Route::prefix('/articles')->name('articles.')->group(function(){
+        Route::get('/create', 'ArticleController@create')->name('create');
+        Route::put('/create', 'ArticleController@store')->name('store');
+        Route::get('/{article}/edit', 'ArticleController@edit')->name('edit');
+        Route::patch('/{article}/edit', 'ArticleController@update')->name('update');
+        Route::delete('/{article}', 'ArticleController@destroy')->name('destroy');
+    });
+});
+
+Route::name('articles.')->group(function(){
+    Route::get('/articles', 'ArticleController@index')->name('index');
+    Route::get('/{book}/{article}', 'ArticleController@show')->name('show');
+});
+
+Route::name('books.')->group(function(){
+    Route::get('/books', 'BookController@index')->name('index');
+    Route::get('/{book}', 'BookController@show')->name('show');
 });

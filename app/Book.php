@@ -53,7 +53,8 @@ class Book extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function articles(){
+    public function articles()
+    {
         return $this->hasMany(Article::class);
     }
 
@@ -89,7 +90,8 @@ class Book extends Model
         return $filters->apply($query);
     }
 
-    public function path(){
-        return '/'.$this->slug;
+    public function path()
+    {
+        return '/' . $this->slug;
     }
 }
