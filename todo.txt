@@ -1,6 +1,11 @@
 07/01
-Update Book
-    Add path() method
+Refactor Routes
+    Remove '/books/' from routes set this to wildcard
+    Updte book tests to path /{book->id}
+    Update article tests to path /{book->id}/{article->id}
+
+Update Book - DONE
+    Add path() method - DONE
 
 Create Articles - DONE
     Make factory - DONE

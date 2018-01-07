@@ -88,4 +88,8 @@ class Book extends Model
     {
         return $filters->apply($query);
     }
+
+    public function path(){
+        return '/books/'.$this->slug;
+    }
 }

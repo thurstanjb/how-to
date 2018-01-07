@@ -26,7 +26,7 @@
                             @foreach($books as $book)
                             <tr>
                                 <td>
-                                    <a href="{{route('books.show', ['book' => $book])}}">
+                                    <a href="{{$book->path()}}">
                                         {{$book->title}}
                                     </a>
                                 </td>
