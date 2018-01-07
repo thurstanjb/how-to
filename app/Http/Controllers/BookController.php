@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Filters\BookFilters;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -14,12 +15,14 @@ class BookController extends Controller
     }
 
     /**
-     * Return list view of all books
+     * Return list view of all books and apply filters
      *
+     * @param BookFilters $filters
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
-        $books = Book::orderby('created_at')->get();
+    public function index(BookFilters $filters)
+    {
+        $books = Book::filter($filters)->get();
 
         return view('main.books.index', compact('books'));
     }
@@ -30,7 +33,8 @@ class BookController extends Controller
      * @param Book $book
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Book $book){
+    public function show(Book $book)
+    {
         return view('main.books.show', compact('book'));
     }
 
@@ -39,7 +43,8 @@ class BookController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(){
+    public function create()
+    {
         return view('admin.books.create');
     }
 
@@ -49,7 +54,8 @@ class BookController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $valid = $this->validate($request, [
             'title' => 'required',
             'description' => 'present'
@@ -69,7 +75,8 @@ class BookController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Book $book){
+    public function edit(Book $book)
+    {
         $this->authorize('update', $book);
 
         return view('admin.books.edit', compact('book'));
@@ -84,7 +91,8 @@ class BookController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Book $book, Request $request){
+    public function update(Book $book, Request $request)
+    {
         $this->authorize('update', $book);
 
         $valid = $this->validate($request, [
@@ -104,12 +112,13 @@ class BookController extends Controller
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function destroy(Book $book){
+    public function destroy(Book $book)
+    {
         $this->authorize('delete', $book);
 
         $book->delete();
 
-        if(request()->wantsJson()){
+        if (request()->wantsJson()) {
             return response([], 204);
         }
 

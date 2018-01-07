@@ -9,22 +9,36 @@ class Book extends Model
     protected $table = 'books';
 
     protected $fillable = [
-      'user_id', 'title', 'description', 'slug'
+        'user_id',
+        'title',
+        'description',
+        'slug'
     ];
 
-    protected $appends =[
-      'author', 'excerpt'
+    protected $appends = [
+        'author',
+        'excerpt'
     ];
 
+    /**
+     * Set the key name for the model binding
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
-    public static function boot(){
+    /**
+     * While booting:
+     *      saving: assign slug
+     */
+    public static function boot()
+    {
         parent::boot();
 
-        static::saving(function($model){
+        static::saving(function ($model) {
             $model->slug = str_slug($model->title);
         });
     }
@@ -34,15 +48,40 @@ class Book extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function owner(){
+    public function owner()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function getAuthorAttribute(){
+    /**
+     * Set the author attribute to the owner name
+     *
+     * @return mixed
+     */
+    public function getAuthorAttribute()
+    {
         return $this->owner->name;
     }
 
-    public function getExcerptAttribute(){
-        return substr($this->description,0,50).'...';
+    /**
+     * Set the excerpt attribute by extracting from the description
+     *
+     * @return string
+     */
+    public function getExcerptAttribute()
+    {
+        return substr($this->description, 0, 50) . '...';
+    }
+
+    /**
+     * Apply query scope to return filtered books
+     *
+     * @param $query
+     * @param $filters
+     * @return mixed
+     */
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
     }
 }

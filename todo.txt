@@ -1,9 +1,12 @@
 07/01
 Fix Exception from book policy - DONE
 
-Add Book filters
-    Add filter class
-    Add filter to show the current users books
+Add Book filters - DONE
+    Add filter class - DONE
+    Add filter to show the current users books - DONE
+        Add slug to user - DONE
+        Make slug index key - DONE
+        Update admin user section navigation - DONE
 
 06/01
 Add book policy - DONE

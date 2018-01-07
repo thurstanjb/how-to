@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'user_type'
+        'name', 'email', 'password', 'user_type', 'slug'
     ];
 
     /**
@@ -28,6 +28,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public static function boot(){
+        parent::boot();
+
+        static::saving(function($model){
+            $model->slug = str_slug($model->name);
+        });
+    }
+
     /**
      * Return the related books for the user
      *
@@ -38,7 +51,7 @@ class User extends Authenticatable
     }
 
     public function path(){
-        return '/admin/users/'.$this->id;
+        return '/admin/users/'.$this->slug;
     }
 
     public function isAdmin(){

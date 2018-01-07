@@ -21,18 +21,19 @@ class CreateUsersTest extends TestCase
     /** @test */
     public function _only_an_admin_user_may_create_a_new_user(){
 
-        $test_user = make(User::class);
+        $test_user = make(User::class, ['email' => 'test@test.com', 'name' => 'Testing 123']);
         $test_user = $test_user->toArray();
         $test_user['password'] = 'secret';
         $test_user['password_confirmation'] = 'secret';
 
         $this->signIn();
-        $response = $this->put('/admin/users', $test_user)
+        $this->put('/admin/users', $test_user)
             ->assertRedirect('/');
         $this->signOut();
 
         $this->signInAdmin();
         $response = $this->put('/admin/users', $test_user);
+
         $this->get($response->headers->get('location'))
             ->assertSee($test_user['name'])
             ->assertSee($test_user['email']);

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -43,17 +44,18 @@ class UserNavigationTest extends TestCase
     /** @test */
     public function _only_an_admin_user_can_visit_the_update_form(){
         $this->withExceptionHandling();
+        $test_user = create(User::class);
 
-        $this->get('admin/users/1/edit')
+        $this->get($test_user->path().'/edit')
             ->assertRedirect('/login');
 
         $this->signIn();
-        $this->get('admin/users/1/edit')
+        $this->get($test_user->path().'/edit')
             ->assertRedirect('/');
         $this->signOut();
 
         $this->signInAdmin();
-        $this->get('admin/users/1/edit')
+        $this->get($test_user->path().'/edit')
             ->assertStatus(200);
     }
 

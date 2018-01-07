@@ -33,7 +33,7 @@ class UserTest extends TestCase
     public function _a_user_can_return_their_profile_path(){
         $user = create(User::class);
 
-        $this->assertEquals('/admin/users/'.$user->id, $user->path());
+        $this->assertEquals('/admin/users/'.$user->slug, $user->path());
     }
 
     /** @test */
@@ -54,5 +54,12 @@ class UserTest extends TestCase
         $this->assertFalse($user->owns($book1));
         $this->assertFalse($user->owns($user2));
         $this->assertTrue($user->owns($book2));
+    }
+
+    /** @test */
+    public function _a_user_can_generate_their_own_slug(){
+        $user = create(User::class);
+
+        $this->assertEquals(str_slug($user->name), $user->slug);
     }
 }
