@@ -38,7 +38,7 @@ class Article extends Model
     }
 
     public function path(){
-        return '/articles/'.$this->slug;
+        return '/'.$this->book->slug.'/'.$this->slug;
     }
 
 

@@ -48,6 +48,6 @@ class ArticleTest extends TestCase
         $book = create(Book::class);
         $art = create(Article::class, ['book_id' => $book->id]);
 
-        $this->assertEquals('/articles/'.$art->slug, $art->path());
+        $this->assertEquals('/'.$book->slug.'/'.$art->slug, $art->path());
     }
 }

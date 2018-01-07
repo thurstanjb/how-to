@@ -20,8 +20,8 @@ Auth::routes();
 
 Route::get('/', 'MainController@index')->name('index');
 
-Route::prefix('/books')->name('books.')->group(function(){
-   Route::get('/', 'BookController@index')->name('index');
+Route::name('books.')->group(function(){
+   Route::get('/books', 'BookController@index')->name('index');
    Route::get('/{book}', 'BookController@show')->name('show');
 });
 

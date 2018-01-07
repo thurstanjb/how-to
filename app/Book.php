@@ -90,6 +90,6 @@ class Book extends Model
     }
 
     public function path(){
-        return '/books/'.$this->slug;
+        return '/'.$this->slug;
     }
 }

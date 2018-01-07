@@ -66,6 +66,6 @@ class BookTest extends TestCase
     public function _it_can_return_its_path(){
         $book = create(Book::class);
 
-        $this->assertEquals('/books/'.$book->slug, $book->path());
+        $this->assertEquals('/'.$book->slug, $book->path());
     }
 }

@@ -23,7 +23,7 @@ class BookNavigationTest extends TestCase
     /** @test */
     public function _it_a_guest_user_can_visit_the_book(){
         $book = create(Book::class);
-        $this->get('books/'.$book->slug)
+        $this->get($book->path())
             ->assertSee($book->title);
     }
 

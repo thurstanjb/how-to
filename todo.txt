@@ -1,8 +1,8 @@
 07/01
-Refactor Routes
-    Remove '/books/' from routes set this to wildcard
-    Updte book tests to path /{book->id}
-    Update article tests to path /{book->id}/{article->id}
+Refactor Routes - DONE
+    Remove '/books/' from routes set this to wildcard - DONE
+    Updte book tests to path /{book->id} - DONE
+    Update article tests to path /{book->id}/{article->id} - DONE
 
 Update Book - DONE
     Add path() method - DONE
