@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Article;
 use App\Book;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -33,6 +34,16 @@ class BookTest extends TestCase
         $book = create(Book::class, ['user_id' => $user->id]);
 
         $this->assertEquals($user->name, $book->author);
+    }
+
+    /** @test */
+    public function _it_can_return_its_articles(){
+        $book = create(Book::class);
+        $bookArticle = create(Article::class, ['book_id' => $book->id]);
+        $notBookArticle = create(Article::class);
+
+        $this->assertTrue($book->articles->contains($bookArticle));
+        $this->assertFalse($book->articles->contains($notBookArticle));
     }
 
     /** @test */

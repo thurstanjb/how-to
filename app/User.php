@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->hasMany(Book::class);
     }
 
+    public function articles(){
+        return $this->hasMany(Article::class);
+    }
+
     public function path(){
         return '/admin/users/'.$this->slug;
     }

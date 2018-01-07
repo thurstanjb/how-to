@@ -53,6 +53,10 @@ class Book extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function articles(){
+        return $this->hasMany(Article::class);
+    }
+
     /**
      * Set the author attribute to the owner name
      *

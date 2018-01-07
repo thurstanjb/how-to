@@ -1,5 +1,13 @@
 07/01
-Fix Exception from book policy - DONE
+Update Book
+    Add path() method
+
+Create Articles - DONE
+    Make factory - DONE
+    Make Model/Migration/Controller - DONE
+    Make unit test and build relations - DONE
+    Add author attribute - DONE
+    Create path() method - DONE
 
 Add Book filters - DONE
     Add filter class - DONE
@@ -7,6 +15,9 @@ Add Book filters - DONE
         Add slug to user - DONE
         Make slug index key - DONE
         Update admin user section navigation - DONE
+
+Fix Exception from book policy - DONE
+
 
 06/01
 Add book policy - DONE
